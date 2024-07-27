@@ -175,7 +175,7 @@
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>
-                    <artifactId>slf4j-log4j12</artifactId>
+                    <artifactId>slf4j-log4j12</artifactId>Z
                 </exclusion>
             </exclusions>
         </dependency>
@@ -418,7 +418,7 @@
                     <plugin>
                         <groupId>com.spotify</groupId>
                         <artifactId>docker-maven-plugin</artifactId>
-                        <version>${docker.plugin.version}</version>
+                        <version>1.2.0</version>
                         <executions>
                             <execution>
                                 <goals>
@@ -457,7 +457,7 @@
                 <dependency>
                     <groupId>com.spotify</groupId>
                     <artifactId>docker-maven-plugin</artifactId>
-                    <version>${docker.plugin.version}</version>
+                    <version>1.2.0</version>
                 </dependency>
             </dependencies>
         </profile>

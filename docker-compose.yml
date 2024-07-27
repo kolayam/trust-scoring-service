@@ -4,6 +4,8 @@ services:
   trust-service:
     image: nimbleplatform/trust-service:staging
     environment:
+      KAFKA_JAAS_CONFIG: org.apache.kafka.common.security.plain.PlainLoginModule required username="token" password="2d4NjszlNV15bf1frbHgJ04pltCQoIQCrCemrFAqE38qThTW";
+      KAFKA_BOOTSTRAP_SERVERS: kafka03-prod02.messagehub.services.eu-gb.bluemix.net:9093,kafka02-prod02.messagehub.services.eu-gb.bluemix.net:9093,kafka05-prod02.messagehub.services.eu-gb.bluemix.net:9093,kafka01-prod02.messagehub.services.eu-gb.bluemix.net:9093,kafka04-prod02.messagehub.services.eu-gb.bluemix.net:9093
       PORT: "9098"
       TRUST_DB_HOST: "trust-db"
       TRUST_DB_HOST_PORT: "5432"
