@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: trust-service
+  namespace: nimble-platform
+  labels:
+    app: trust-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: trust-service
+  template:
+    metadata:
+      labels:
+        app: trust-service
+    spec:
+      containers:
+        - name: trust-service
+          image: 'rannybal2024/trust-service:IMAGE_TAG'
+          ports:
+            - containerPort: 9098
+              protocol: TCP
+          env:
+            - name: PORT
+              value: '9098'
+            - name: _JAVA_OPTIONS
+              value: '-Xmx128m -Xms128m'
+            - name: TRUST_DB_HOST
+              value: kola-postgress-do-user-13910731-0.c.db.ondigitalocean.com
+            - name: TRUST_DB_NAME
+              value: trustdb?ssl=true&sslmode=require
+            - name: TRUST_DB_USERNAME
+              value: doadmin
+            - name: TRUST_DB_PASSWORD
+              value: AVNS_xN6h3TZAvlOwe4vdAdk
+            - name: KAFKA_BOOTSTRAP_SERVERS
+              value: 'my-cluster-kafka-bootstrap:9092'
+            - name: TRUST_DB_HOST_PORT
+              value: '25060'
+            - name: KAFKA_JAAS_CONFIG
+            - name: CONFIG_SERVER_URI
+              value: 'http://config-server:8888'
+            - name: CONFIG_SERVER_FAILFAST
+              value: 'true'
+            - name: DISCOVERY_ENABLED
+              value: 'true'
+            - name: DISCOVERY_PREFER_IP
+              value: 'false'
+            - name: DISCOVERY_SERVER_URI
+              value: 'http://service-discovery:8761'
+          resources:
+            limits:
+              memory: 2000Mi
+              cpu: 800m
+            requests:
+              cpu: 200m
+              memory: 256Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+
